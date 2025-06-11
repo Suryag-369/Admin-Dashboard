@@ -35,7 +35,7 @@ export function LoginForm({ className, ...props }) {
 
       const data = response.data;
       localStorage.setItem('accessToken', data.accessToken);
-      navigate('/');
+      navigate('/dashboard');
     } catch (error) {
       if (error.response && error.response.data?.message) {
         setErrorMessage(error.response.data.message);

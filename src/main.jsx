@@ -2,24 +2,35 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {LoginForm} from "@/components/login-form.jsx";
-import {SectionCards} from "@/components/section-cards.jsx";
-import {EmployeeTable} from "@/components/Employee/EmployeeTable.jsx";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { LoginForm } from "@/components/login-form.jsx";
+import { SectionCards } from "@/components/section-cards.jsx";
+import { EmployeeTable } from "@/components/Employee/EmployeeTable.jsx";
 import ReportsPage from "@/components/Report/charts.jsx";
+import ProtectedRoute from './components/ProtectedRoute.jsx';
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <BrowserRouter>
-        <Routes>
-            <Route path="/login" element={<LoginForm/>}/>
-            <Route path="/" element = {<App/>} >
-                <Route path="" element={<SectionCards/>}/>
-                <Route path="/employees" element={<EmployeeTable />}/>
-                <Route path="/reports" element={<ReportsPage />}/>
-
-            </Route>
-        </Routes>
-    </BrowserRouter>
-  </StrictMode>
+    <StrictMode>
+        <BrowserRouter>
+            <Routes>
+                {/* Login page at root */}
+                <Route path="/" element={<LoginForm />} />
+                {/* Dashboard and nested routes under /dashboard */}
+                <Route
+                    path="/dashboard"
+                    element={
+                        <ProtectedRoute>
+                            <App />
+                        </ProtectedRoute>
+                    }
+                >
+                    <Route index element={<SectionCards />} />
+                    <Route path="employees" element={<EmployeeTable />} />
+                    <Route path="reports" element={<ReportsPage />} />
+                </Route>
+                {/* Redirect unknown routes to root (login) */}
+                <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+        </BrowserRouter>
+    </StrictMode>
 )
