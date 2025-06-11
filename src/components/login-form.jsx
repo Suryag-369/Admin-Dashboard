@@ -72,7 +72,7 @@ export function LoginForm({ className, ...props }) {
                       value={email}
                       onChange={e => setEmail(e.target.value)}
                       disabled={loading}
-                      placeholder="admin@example.com"
+                      placeholder="Enter Your email"
                       required
                   />
                 </div>
@@ -84,6 +84,7 @@ export function LoginForm({ className, ...props }) {
                       value={password}
                       onChange={e => setPassword(e.target.value)}
                       disabled={loading}
+                      placeholder="Enter Your password"
                       required
                   />
                 </div>
